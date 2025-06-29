@@ -1,0 +1,36 @@
+Interim Submission Report - 10 Academy AI Mastery Week 5
+
+Task 1: Credit Scoring Business Understanding
+
+1. Basel II Accord and Model Interpretability
+   The Basel II Accord mandates robust risk measurement and transparency for regulatory compliance. Interpretable models, such as Logistic Regression with Weight of Evidence (WoE), enable clear explanation of risk predictions, aligning with regulatory standards, facilitating audits, and fostering stakeholder trust. Comprehensive documentation ensures traceability, supporting Basel II’s risk management requirements.
+
+2. Need for Proxy Variable and Business Risks
+   Without a "default" label in the dataset, a proxy variable (e.g., derived from RFM clustering) is essential to estimate credit risk for model training. An inaccurate proxy may misclassify customers, leading to erroneous loan approvals or rejections. Business risks include financial losses from approving high-risk loans, missing opportunities with low-risk customers, or regulatory penalties due to unreliable predictions.
+
+3. Trade-offs: Simple vs. Complex Models
+   - Logistic Regression with WoE: Highly interpretable, meets regulatory demands, and is easier to explain to stakeholders, but may underfit complex data, reducing predictive accuracy.
+   - Gradient Boosting: Offers superior accuracy and captures complex patterns, but its lower interpretability complicates regulatory compliance and stakeholder communication. In regulated financial contexts, interpretability often outweighs marginal performance gains.
+
+Task 2: Exploratory Data Analysis (EDA) Progress
+- Dataset Overview: The Xente dataset (from Kaggle) contains 95662 rows and 15 columns, including numerical features (Amount, Value, PricingStrategy) and categorical features (ProductCategory, ChannelId, CurrencyCode). Data types include integers, floats, and objects (TransactionStartTime as datetime).
+- Summary Statistics: Amount ranges from -1000000 to 1000000, mean ~156.7, with high variance, indicating potential outliers. Value is the absolute of Amount, showing similar distribution.
+- Numerical Feature Distribution: Amount and Value are right-skewed, with few large transactions indicating outliers. Box plots confirm extreme values in Amount.
+- Categorical Feature Distribution: ProductCategory has 9 categories, with "airtime" and "financial_services" most frequent. ChannelId has 5 categories, dominated by web and mobile transactions.
+- Correlation Analysis: Amount and Value are perfectly correlated (r=1). Weak correlations exist between PricingStrategy and FraudResult.
+- Missing Values: No missing values detected, simplifying preprocessing.
+- Outliers: Outliers in Amount (e.g., transactions > 100000) may require clipping or transformation.
+- Key Insights:
+  1. Skewed Amount distribution suggests log-transformation for modeling.
+  2. ProductCategory and ChannelId are promising for feature engineering due to variability.
+  3. FraudResult (0 or 1) is imbalanced (99.8% non-fraud), requiring balanced sampling or metrics like F1-score.
+  4. TransactionStartTime can be used to extract temporal features (hour, day, month).
+
+Other Progress
+- Feature Engineering (Task 3): Initiated RFM metrics (Recency, Frequency, Monetary) for CustomerId, using TransactionStartTime for recency and Amount for monetary value.
+- Proxy Variable (Task 4): Planned K-Means clustering on RFM features to define is_high_risk (1 for high-risk, 0 for low-risk).
+
+Next Steps
+- Finalize RFM clustering for proxy variable.
+- Implement feature engineering in src/data_hemorrhq.py using sklearn pipelines.
+- Start model training with Logistic Regression and Gradient Boosting.
