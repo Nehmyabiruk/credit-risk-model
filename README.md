@@ -1,101 +1,79 @@
 📊 Credit Risk Model (Bati Bank BNPL)
 🚀 Overview
 
-This project builds a Credit Risk Prediction System for Bati Bank’s Buy-Now-Pay-Later (BNPL) service using the Xente transaction dataset.
+This project builds a Credit Risk Prediction System for Bati Bank’s Buy-Now-Pay-Later (BNPL) service using the Xente dataset.
 
 It covers the full ML lifecycle:
 
 Data preprocessing & feature engineering (RFM)
-Proxy target creation (since default labels are not available)
+Proxy target creation
 Model training (Gradient Boosting)
-Experiment tracking (MLflow)
-Model deployment via FastAPI
-CI/CD ready project structure
+MLflow tracking
+FastAPI deployment
+Docker + CI/CD ready structure
 
-The goal is to classify customers into Low, Medium, and High credit risk to support lending decisions.
-
-🧠 Business Understanding (Credit Scoring Context)
+🧠 Business Understanding
 1. Basel II Compliance
 
-Financial institutions must use:
+Financial institutions require:
 
-Interpretable models (e.g., Logistic Regression, WoE)
+Interpretable models
 Transparent decision-making
-Auditable risk scoring systems
-
-This project balances:
-
-✔ Interpretability
-✔ Predictive performance
+Auditable systems
 2. Proxy Target Problem
 
-The dataset has no explicit default label, so we construct a proxy:
+No default label exists, so we define:
 
-High risk = customers with:
-High Recency (inactive users)
-Low Frequency (low engagement)
+High risk = high Recency + low Frequency
 
-⚠️ Risk: Proxy labels may introduce noise and bias, affecting model accuracy.
+⚠️ This introduces some labeling noise.
 
-3. Model Trade-offs
+3. Model Choice
 Model	Pros	Cons
-Logistic Regression	Highly interpretable	May underfit complex patterns
-Gradient Boosting (Used)	High accuracy	Less interpretable
+Logistic Regression	Interpretable	Lower accuracy
+Gradient Boosting	High performance	Less interpretable
 
-We selected Gradient Boosting Classifier for better predictive performance.
+We use Gradient Boosting Classifier.
 
 📁 Project Structure
 credit-risk-model/
-│
-├── README.md
-├── final_report.pdf
-├── requirements.txt
-├── Dockerfile
-├── docker-compose.yml
-├── .gitignore
 │
 ├── notebooks/
 │   └── 10-eda.ipynb
 │
 ├── src/
-│   ├── __init__.py
 │   ├── data_hemorrhq.py
 │   ├── train.py
 │   └── predict.py
 │
 ├── api/
-│   ├── main.py
-│   └── pydantic_models.py
+│   └── main.py
 │
 ├── tests/
-│   └── test_data_hemorrhq.py
-│
-└── .github/
-    └── workflows/
-        └── ci.yml
-⚙️ Setup Instructions
-1. Clone Repository
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+└── README.md
+
+⚙️ Setup
+
+1. Clone repo
 git clone https://github.com/Nehmyabiruk/credit-risk-model.git
 cd credit-risk-model
-2. Install Dependencies
+
+3. Install dependencies
 pip install -r requirements.txt
-3. Train Model
+
+5. Train model
 python src/train.py
 
-This will:
-
-Train Gradient Boosting model
-Log metrics with MLflow
-Save model to:
-models/credit_model.pkl
-4. Run API (FastAPI)
-uvicorn api.main:app --reload
-5. Run with Docker (Optional)
-docker-compose up
+7. Run API
+ python api/main.py
+   
 📡 API Usage
 Endpoint
 POST /predict
-Request Body
+Request
 {
   "CustomerId": "CUST001",
   "Recency": 15,
@@ -110,45 +88,22 @@ Response
   "RiskLevel": "Low Risk",
   "Recommendation": "Approve"
 }
+
 📊 Model Performance
-Accuracy: ~0.85+
-F1 Score: Balanced for imbalanced classification
-ROC-AUC: Strong ranking performance
-🧪 Testing
+Accuracy: 85%+
+F1 Score: Balanced
+ROC-AUC: Strong ranking power
 
-Run unit tests:
-
-pytest tests/
-🔄 CI/CD Pipeline
-
-GitHub Actions workflow:
-
-Runs tests automatically
-Validates code structure
-Ensures reproducibility
 🧰 Tech Stack
-Python 🐍
-Pandas / NumPy
+Python
 Scikit-learn
+Pandas
 MLflow
 FastAPI
 Docker
 GitHub Actions
-📌 Key Features
-
-✔ RFM Feature Engineering
-✔ Proxy Label Creation
-✔ MLflow Experiment Tracking
-✔ REST API with FastAPI
-✔ Dockerized Deployment
-✔ CI/CD Pipeline
 
 👨‍💻 Author
 
 Nehmya Biruk
-Computer Science Student | AI/ML Engineer
-GitHub: Nehmyabiruk
-
-📜 License
-
-This project is for educational purposes (10 Academy Week Project).
+GitHub: https://github.com/Nehmyabiruk
