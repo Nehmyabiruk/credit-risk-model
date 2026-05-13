@@ -1,3 +1,10 @@
-data/
+__pycache__/
 *.pyc
-pycache/
+*.pyo
+*.pyd
+.env
+data/raw/*.csv
+mlruns/
+models/
+*.log
+.DS_Store

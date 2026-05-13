@@ -1,8 +1,10 @@
-version: '3.8'
+version: '3.9'
+
 services:
-  app:
+  credit-risk-api:
     build: .
     ports:
       - "8000:8000"
     volumes:
       - .:/app
+    restart: unless-stopped
